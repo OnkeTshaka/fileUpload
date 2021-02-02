@@ -1,0 +1,36 @@
+﻿@model Upload.Models.Video
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Video</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Vname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Data)
+        </dt>
+
+        <dd>
+            <video style="width:300px;height:220px; margin-left:20px;margin-top:10px;" controls>
+                <source src="data:video/mp4;base64,@Convert.ToBase64String(Model.Data, 0, Model.Data.Length)" type="video/mp4" />
+            </video>
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Vid }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

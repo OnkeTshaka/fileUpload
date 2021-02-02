@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Upload.Models.Video>
+
+@{
+    ViewBag.Title = "Index";
+}
+@*<div class="pull-right" style="margin-top: 20px;">
+    @using (Html.BeginForm("Index", "Videos", FormMethod.Get))
+    {
+        <p style="background-color:lightgray;padding:10px;">
+            @Html.Label("Name: ")
+            @Html.TextBox("searching")
+            <input style="color:#111;" type="submit" value="Search" />
+            <img src="~/Images/ICONS/searchIcon.png" />
+        </p>
+    }
+</div>*@
+<h2 class="text-center">My Videos</h2>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+ 
+
+<div class="container">
+
+    @if (Model.Count() == 0)
+    {
+        <div colspan="3" style="color:red;">
+            No Match Found
+        </div>
+
+    }
+    else
+    {
+
+        foreach (var item in Model)
+        {
+            <div class="col-sm-4 col-md-4 col-xs-12" style="margin-top:50px;margin-bottom:50px;">
+                <div class="video-frame" style="margin-left:auto; border:unset">
+                    <video style="width:300px;height:220px; margin-left:20px;margin-top:10px;" controls>
+                        <source src="data:video/mp4;base64,@Convert.ToBase64String(item.Data, 0, item.Data.Length)" type="video/mp4" />
+                    </video><br /><hr />
+                    <div class="title" style="width:250px; margin-left:20px;color:#111;">
+                        <b style="text-transform:uppercase;">
+                            @Html.DisplayFor(modelItem => item.Vname)<br /><br />
+                            <a href='@Url.Action("Delete","Videos", new { id=item.Vid })' class="btn btn-sx btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+
+                        </b>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</div>
+
+

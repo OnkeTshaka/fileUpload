@@ -1,0 +1,71 @@
+﻿@model Upload.Models.Image
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm("Edit", "Images", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Image</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ImageID)    <div class="form-group">
+        <div class="col-md-10">
+            <img src="data:image/png;base64,@Convert.ToBase64String(Model.Data, 0, Model.Data.Length)" style="width: 60px; height: 60px; border-radius:50%;" alt="" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Data, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                <input type="file" name="file" id="file" style="width: 100%;" onchange="readURL(this);" class="form-control" required="required"/>
+                @Html.ValidationMessageFor(model => model.Data, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div class="col-md-6">
+    <div class="col-md-6">
+        <img id="Image" src="#" alt="" />
+    </div>
+
+    <script type="text/javascript">
+        //image preview
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#Image')
+                        .attr('src', e.target.result)
+                        .width(400)
+                        .height(400);
+
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
